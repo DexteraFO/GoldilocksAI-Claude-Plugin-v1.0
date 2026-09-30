@@ -1,0 +1,9 @@
+{
+  "name": "investment-ready-research",
+  "displayName": "Investment Ready Research",
+  "version": "0.1.0",
+  "description": "Public-source investment screening, thesis-aligned shortlists, and evidence-backed company reports with a clearly simulated relationship path.",
+  "author": {
+    "name": "Harshit Panchal"
+  }
+}
