@@ -1,0 +1,25 @@
+{
+  "title": "Investment Ready Recommendations (sample, fictional)",
+  "as_of": "2026-10-01",
+  "summary": "Fictional shape example. Not a research result. [S1]",
+  "mandate": [{"criterion": "Sector", "requirement": "Example category", "type": "Hard"}],
+  "candidates": [{
+    "company": "Example Company", "score": "62-82/100 provisional", "coverage": "80%",
+    "location": "City, Country", "revenue": "Unknown", "employees": "Unknown",
+    "ownership": "Private; verify", "signal": "Placeholder signal [S1]",
+    "ceo": "Unknown", "eligibility": "Conditional", "action": "Validate eligibility",
+    "sources": ["S1"]
+  }],
+  "leader": {
+    "company": "Example Company", "website": "https://example.org", "score": "62-82/100 provisional",
+    "tags": ["Category"],
+    "metrics": [{"label": "Annual revenue", "value": "Unknown"}],
+    "insights": ["Placeholder fact [S1] -> placeholder thesis implication."],
+    "overview": "Placeholder overview [S1].",
+    "countercase": "Placeholder countercase.",
+    "diligence": ["Placeholder diligence question."],
+    "score_details": [{"dimension": "Sector/product fit", "points": "15/20", "rationale": "Placeholder [S1]"}]
+  },
+  "conditional_excluded": [{"company": "Other Company", "status": "Excluded", "reason": "Placeholder gate failed [S1]"}],
+  "sources": [{"id": "S1", "title": "Placeholder source", "publisher": "Example", "date": "2026-01-01", "url": "https://example.org/path", "accessed": "2026-10-01"}]
+}

@@ -22,4 +22,4 @@ Hard gates should match the mandate. Examples: geography, transaction type, sect
 
 ## Public-only boundary
 
-The screenshots contain fields called CRM, ground truth, and relationship strength. This plugin has none of those inputs. Render `Public signal / evidence note` instead of CRM. Render a mock path with dashed or labeled hypothetical links; use generic roles. When private sources are connected in a later version, add source provenance and permissions before treating any private signal as verified.
+Investor tools often have fields called CRM, ground truth, and relationship strength. This plugin has none of those inputs. Render `Public signal / evidence note` instead of CRM. Render a mock path with dashed or labeled hypothetical links; use generic roles. When private sources are connected in a later version, add source provenance and permissions before treating any private signal as verified.

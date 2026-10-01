@@ -5,5 +5,13 @@
   "description": "Public-source investment screening, thesis-aligned shortlists, and evidence-backed company reports with a clearly simulated relationship path.",
   "author": {
     "name": "Harshit Panchal"
-  }
+  },
+  "keywords": [
+    "investment",
+    "screening",
+    "research",
+    "due-diligence",
+    "shortlist"
+  ],
+  "license": "MIT"
 }

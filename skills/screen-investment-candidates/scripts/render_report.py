@@ -30,6 +30,11 @@ def validate(data):
     sources = data.get("sources", [])
     if not isinstance(sources, list):
         raise ValueError("sources must be a list")
+    if any(not isinstance(s, dict) for s in sources):
+        raise ValueError("Every source must be an object")
+    for c in data.get("candidates", []):
+        if not isinstance(c, dict) or not isinstance(c.get("sources", []), list):
+            raise ValueError("Each candidate must be an object with a list of sources")
     ids = [s.get("id") for s in sources]
     if any(not re.fullmatch(r"S\d+", str(i or "")) for i in ids) or len(ids) != len(set(ids)):
         raise ValueError("Source IDs must be unique S1, S2, ... identifiers")
@@ -103,7 +108,7 @@ def render(data):
     excluded = data.get("conditional_excluded", [])
     excluded_html = table(["Company", "Status", "Reason"], [[esc(x.get("company", "")), esc(x.get("status", "")), cite_text(x.get("reason", ""))] for x in excluded]) if excluded else "<p>None listed.</p>"
     sources_html = "".join(
-        f'<li id="source-{esc(x["id"])}"><strong>[{esc(x["id"])}] {esc(x.get("title", "Untitled"))}</strong> — '
+        f'<li id="source-{esc(x["id"])}"><strong>[{esc(x["id"])}] {esc(x.get("title", "Untitled"))}</strong>, '
         f'{esc(x.get("publisher", "Unknown publisher"))}, {esc(x.get("date", "undated"))}; accessed {esc(x.get("accessed", "Unknown"))}. '
         f'<a href="{esc(x["url"])}" target="_blank" rel="noopener noreferrer">Open source</a></li>'
         for x in data.get("sources", [])
@@ -135,7 +140,7 @@ def render(data):
       <p>As of {esc(data.get("as_of", "Unknown"))} · Public data only · Relationship route is illustrative</p><p>{cite_text(data.get("summary", ""))}</p></header>
     <section><h2>Investment mandate</h2>{mandate}</section><section><h2>Ranked shortlist</h2>{shortlist}</section>
     <section><h2>Leading company</h2>{profile}</section>
-    <section><h2>Relationship path — MOCK ONLY</h2><div class="mock"><strong>Illustrative route, no verified connections</strong>
+    <section><h2>Relationship path, MOCK ONLY</h2><div class="mock"><strong>Illustrative route, no verified connections</strong>
       <div class="route"><span class="node">Your team</span><span class="edge">unverified / hypothetical →</span>
       <span class="node">Potential sector intermediary</span><span class="edge">unverified / hypothetical →</span>
       <span class="node">Target executive</span></div><p>Next action: Validate introduction route. This diagram does not establish any mutual contact or warm introduction.</p></div></section>
