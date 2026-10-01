@@ -1,0 +1,13 @@
+{
+  "name": "investment-ready-marketplace",
+  "owner": {
+    "name": "Harshit Panchal"
+  },
+  "plugins": [
+    {
+      "name": "investment-ready-research",
+      "source": "./plugins/investment-ready-research",
+      "description": "Evidence-backed investment screening with public data and a mock relationship route"
+    }
+  ]
+}
