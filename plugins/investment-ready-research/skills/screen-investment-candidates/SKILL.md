@@ -37,6 +37,15 @@ For the research protocol and source hierarchy, read [research-protocol.md](refe
 
 ## Deliverable
 
-Present an executive summary, criteria, scored shortlist table, one leading-company profile with metric cards, 3–5 thesis insights, overview, countercase, diligence questions, mock relationship route, and a numbered sources list. Show "Unknown" rather than a fabricated metric. Include an as-of date, source dates, confidence, and excluded/conditional cases. Show score intervals when evidence is incomplete. Never display a bare precise score such as 97 unless all dimensions are supported and the computation is reproducible.
+Present an executive summary, criteria, scored shortlist table, one leading-company profile with metric cards, 3–5 thesis insights, overview, countercase, diligence questions, mock relationship route, a screening flow diagram, and a numbered sources list. Show "Unknown" rather than a fabricated metric. Include an as-of date, source dates, confidence, and excluded/conditional cases. Show score intervals when evidence is incomplete. Never display a bare precise score such as 97 unless all dimensions are supported and the computation is reproducible.
 
 If the environment supports file creation, the user requests a visual, or a report artifact would help, offer a self-contained HTML version using `scripts/render_report.py` and the JSON shape in [report-format.md](references/report-format.md). The HTML renderer is a display layer; research and fact checking still occur before supplying the JSON. Otherwise render the same structure in Markdown. Never say a six-step progress interface is actually running when it is merely a report outline.
+
+
+## Diagrams (Mermaid)
+
+Always include two Mermaid flowcharts in the report: the **screening flow** (mandate criteria → watchlist → screened shortlist → leading company, with a branch to conditional/excluded names, using real counts) and the **mock relationship path** (Your team → Potential sector intermediary → Target executive, every edge labelled `unverified / hypothetical`, nodes styled dashed). Follow [the diagram rules](references/diagrams.md).
+
+- **HTML report:** `scripts/render_report.py` builds both diagrams itself and renders them with a bundled Mermaid library, so no extra step or internet access is needed. Do not hand-write diagram HTML.
+- **Markdown report or chat reply:** if a Mermaid tool such as `validate_and_render_mermaid_diagram` is available, call it for each diagram so the diagram renders inline. If no such tool exists, include the diagram as a fenced ```mermaid code block and mention that it renders in any Mermaid viewer.
+- Keep node labels plain text (letters, numbers, spaces, basic punctuation). Never put source URLs, personal contact details, or an asserted relationship in a diagram.

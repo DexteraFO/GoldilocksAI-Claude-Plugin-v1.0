@@ -1,6 +1,6 @@
 # Investment_Ready_Recommendation
 
-Claude plugin marketplace containing **investment-ready-research**: public-source investment screening with scored, evidence-backed shortlists.
+Claude plugin marketplace containing **investment-ready-research**: public-source investment screening with scored, evidence-backed shortlists and Mermaid diagrams.
 
 ## Install
 

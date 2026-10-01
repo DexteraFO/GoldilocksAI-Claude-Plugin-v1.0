@@ -8,7 +8,7 @@ A Claude plugin that screens companies against an investor mandate using public 
 - Builds and checks a watchlist from current public sources
 - Scores each company on a 100-point mandate fit scorecard, with evidence coverage and score intervals
 - Writes a report: ranked shortlist, leading company profile, thesis insights, countercase, diligence questions, sources
-- Optionally renders a self-contained HTML report
+- Optionally renders a self-contained HTML report with Mermaid diagrams (screening flow and mock relationship path), bundled so they work offline
 
 ## Use
 
@@ -23,4 +23,6 @@ Public data only. No CRM, private data or verified social graph. The relationshi
 - `skills/screen-investment-candidates/SKILL.md`: workflow and evidence rules
 - `references/`: research protocol, scorecard, report format
 - `scripts/render_report.py`: HTML renderer (Python standard library only)
+- `scripts/vendor/mermaid.min.js`: bundled Mermaid library (MIT license in `MERMAID-LICENSE`)
+- `references/diagrams.md`: Mermaid diagram rules
 - `examples/sample-report.json`: fictional input shape for the renderer

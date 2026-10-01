@@ -24,6 +24,54 @@ def cite_text(value):
     return re.sub(r"\[(S\d+)\]", r'<a class="cite" href="#source-\1">[\1]</a>', escaped)
 
 
+def mermaid_loader():
+    """Inline the bundled Mermaid library when present, else load it from a CDN."""
+    bundled = Path(__file__).parent / "vendor" / "mermaid.min.js"
+    if bundled.exists():
+        code = bundled.read_text(encoding="utf-8").replace("</script", "<\\/script")
+        return f"<script>{code}</script>"
+    return '<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>'
+
+
+def mm(value, limit=60):
+    """Make text safe for a quoted Mermaid label."""
+    cleaned = re.sub(r"[^A-Za-z0-9 .,&/+-]", "", str(value if value is not None else ""))
+    return cleaned.strip()[:limit] or "Unknown"
+
+
+def names(n):
+    return f"{n} name" + ("" if n == 1 else "s")
+
+
+def relationship_diagram(data):
+    leader = data.get("leader") or {}
+    target = mm(leader.get("company", "")) if leader else "Unknown"
+    return "\n".join([
+        "flowchart LR",
+        '  A["Your team"] -. "unverified / hypothetical" .-> B["Potential sector intermediary"]',
+        f'  B -. "unverified / hypothetical" .-> C["Target executive: {target}"]',
+        "  classDef mock stroke-dasharray: 5 5,stroke:#c79642",
+        "  class A,B,C mock",
+    ])
+
+
+def screening_diagram(data):
+    shortlist = len(data.get("candidates", []))
+    other = len(data.get("conditional_excluded", []))
+    leader = (data.get("leader") or {}).get("company")
+    lines = [
+        "flowchart LR",
+        '  M["Mandate criteria"] --> W["Watchlist"]',
+        f'  W --> S["Screened shortlist: {names(shortlist)}"]',
+    ]
+    if leader:
+        lines.append(f'  S --> L["Leading company: {mm(leader)}"]')
+    else:
+        lines.append('  S --> L["No definitive leader"]')
+    lines.append(f'  S --> X["Conditional or excluded: {names(other)}"]')
+    return "\n".join(lines)
+
+
 def validate(data):
     if not isinstance(data, dict):
         raise ValueError("The report must be a JSON object")
@@ -131,9 +179,10 @@ def render(data):
       section{margin-top:27px}ul{padding-left:22px}li{margin:9px 0;color:#d4dce5}li::marker{color:#d2ab57}
       .mock{border:1px solid #6b5a35;background:#242519;border-radius:16px;padding:18px}.mock strong{color:#f3ca73}.route{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0}
       .node{border:1px solid #536071;border-radius:12px;padding:10px 13px;background:#1a2430}.edge{color:#f1bb59;font-size:12px;border-bottom:2px dashed #c79642;padding:0 8px 4px}
-      .footnote{font-size:12px;color:#9facb9}.sources{word-break:break-word}
+      pre.mermaid{background:#151d28;border:1px solid #2a3643;border-radius:14px;padding:16px;overflow-x:auto;color:#98a6b7;font-size:12px;white-space:pre-wrap}pre.mermaid[data-processed]{white-space:normal;color:inherit}\n      .footnote{font-size:12px;color:#9facb9}.sources{word-break:break-word}
       @media(max-width:720px){main{padding:20px 12px 60px}.metric-grid{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}.route{flex-direction:column;align-items:stretch}.edge{text-align:center}}
     '''
+    mermaid_script = mermaid_loader()
     return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <title>{esc(data.get("title", "Investment Ready Recommendations"))}</title><style>{css}</style></head><body><main>
     <header><div class="eyebrow">Public-source company summary report</div><h1>{esc(data.get("title", "Investment Ready Recommendations"))}</h1>
@@ -143,11 +192,25 @@ def render(data):
     <section><h2>Relationship path, MOCK ONLY</h2><div class="mock"><strong>Illustrative route, no verified connections</strong>
       <div class="route"><span class="node">Your team</span><span class="edge">unverified / hypothetical →</span>
       <span class="node">Potential sector intermediary</span><span class="edge">unverified / hypothetical →</span>
-      <span class="node">Target executive</span></div><p>Next action: Validate introduction route. This diagram does not establish any mutual contact or warm introduction.</p></div></section>
+      <span class="node">Target executive</span></div><pre class="mermaid" id="rel-diagram">{esc(relationship_diagram(data))}</pre>
+      <p>Next action: Validate introduction route. This diagram does not establish any mutual contact or warm introduction.</p></div></section>
+    <section><h2>Screening flow</h2><pre class="mermaid">{esc(screening_diagram(data))}</pre></section>
     <section><h2>Conditional and excluded names</h2>{excluded_html}</section>
     <section class="sources"><h2>Sources</h2><ol>{sources_html}</ol></section>
     <p class="footnote">Scores measure mandate fit from available evidence. They are not predicted returns or investment advice.</p>
-    </main></body></html>'''
+    </main>
+    {mermaid_script}
+    <script>
+      (async function () {{
+        try {{
+          if (!window.mermaid) return;
+          mermaid.initialize({{startOnLoad: false, theme: "dark", securityLevel: "strict"}});
+          await mermaid.run({{querySelector: ".mermaid"}});
+          var route = document.querySelector(".route");
+          if (route) route.style.display = "none";
+        }} catch (e) {{ /* keep static route and diagram source visible */ }}
+      }})();
+    </script></body></html>'''
 
 
 def main():

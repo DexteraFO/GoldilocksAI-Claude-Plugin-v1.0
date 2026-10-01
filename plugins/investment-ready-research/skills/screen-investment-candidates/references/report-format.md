@@ -8,8 +8,9 @@
 4. `Leading company` profile with sector tags and six metric cards: annual revenue, employees, founded, ownership, growth, funding. Omit or mark unknown without filler values.
 5. `Key investment insights` of 3–5 bullets, each tying a source-backed fact to the mandate and showing an inference as inference.
 6. `Company overview`, `Countercase`, and `Diligence questions`.
-7. `Relationship path, mock only`, displaying generic roles linked by **unverified hypothetical** edges. If a sourced executive is named, that confirms identity only, not the connection. Next action: Validate introduction route.
-8. `Scoring details` (six dimensions, points, rationale, source IDs), `Conditional/excluded names`, and `Sources` with title, publisher, date, URL, access date. Keep the full audit trail accessible even when a compact table leads.
+7. `Relationship path, mock only`, displaying generic roles linked by **unverified hypothetical** edges. If a sourced executive is named, that confirms identity only, not the connection. Next action: Validate introduction route. Show it as the Mermaid diagram from [diagrams.md](diagrams.md).
+8. `Screening flow`: the Mermaid screening diagram from [diagrams.md](diagrams.md).
+9. `Scoring details` (six dimensions, points, rationale, source IDs), `Conditional/excluded names`, and `Sources` with title, publisher, date, URL, access date. Keep the full audit trail accessible even when a compact table leads.
 
 This plugin has no "Handshake" action and no proprietary score name. Use "Validate introduction route" and "Mandate fit score." Do not present CRM columns or hidden internal validation.
 
@@ -19,7 +20,7 @@ If Claude can execute scripts, write UTF-8 JSON to a workspace path and run:
 
 `python3 scripts/render_report.py input.json output.html`
 
-Locate the script relative to this skill's directory. The script uses Python standard library only. It escapes untrusted text and renders a dark, responsive report with the same information hierarchy as the Markdown report. File creation depends on the Claude environment; the Markdown report remains the baseline.
+Locate the script relative to this skill's directory. The script uses Python standard library only and inlines the bundled Mermaid library (`scripts/vendor/mermaid.min.js`), so the relationship path and screening flow diagrams render without internet access. If the bundle is missing it falls back to a CDN. It escapes untrusted text and renders a dark, responsive report with the same information hierarchy as the Markdown report. File creation depends on the Claude environment; the Markdown report remains the baseline.
 
 The JSON object has the following shape (strings may be empty/`Unknown`, but do not silently invent them):
 
