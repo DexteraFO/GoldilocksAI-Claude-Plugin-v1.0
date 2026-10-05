@@ -20,4 +20,4 @@ Assign 0–max points per dimension with a one-sentence rationale and source IDs
 
 If all dimensions are assessed, show the computed integer `/100` and the coverage. If a dimension has only partial evidence, give a conservative assessed score with an explicit caveat or mark it Unknown; never use false decimals. Rank eligible names by supported points, then coverage, while visibly flagging overlapping score intervals. If coverage is below 70%, do not declare a definitive top pick. Do not combine conditional and eligible names into an unconditional ranking. Explain any weight changes requested by the user and keep the sum at 100.
 
-An `Excluded` name has no investment-ready rank. It can appear separately as a sector comparable. A `Conditional` name gets a provisional score only if useful and is never described as investment ready without resolving the gating unknown.
+An `Excluded` name has no investment-ready rank and is left out of the report. A `Conditional` name gets a provisional score only if useful and is never described as investment ready without resolving the gating unknown, and is left out of the report.

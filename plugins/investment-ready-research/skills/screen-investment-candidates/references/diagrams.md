@@ -2,18 +2,6 @@
 
 Use Mermaid `flowchart LR`. Validate syntax before delivering (use a Mermaid render tool when available).
 
-## Screening flow
-
-```mermaid
-flowchart LR
-  M["Mandate criteria"] --> W["Watchlist"]
-  W --> S["Screened shortlist: N names"]
-  S --> L["Leading company: Name"]
-  S --> X["Conditional or excluded: N names"]
-```
-
-Use real counts. If no leader is supported by the evidence, use `L["No definitive leader"]`.
-
 ## Mock relationship path
 
 ```mermaid
