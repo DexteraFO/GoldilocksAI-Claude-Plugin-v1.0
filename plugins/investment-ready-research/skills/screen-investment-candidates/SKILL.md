@@ -9,6 +9,18 @@ Produce an investment-ready research report that follows a six-stage flow: crite
 
 Use this skill when the user asks to find investable companies, screen a watchlist, rank acquisition or growth-equity targets, produce a thesis-aligned shortlist, or make a report resembling a ranked company summary with a deep dive and a relationship path. This is research support, not an investment decision or valuation opinion.
 
+## Authentication (required before running)
+
+This skill requires an active Goldilocks login — it does not run for a logged-out user. Before
+step 1, run `scripts/goldilocks_auth.py verify`. It prints a JSON object:
+
+- `{"valid": true, "user": {...}}` → proceed with the workflow below.
+- `{"valid": false, ...}` → stop immediately. Do not produce a report, mock or otherwise. Tell
+  the user to run `/investment-ready-research:login <token>` (they generate the token from the
+  Goldilocks web app's account settings) and try again.
+
+Never skip this check or assume success without actually running the script.
+
 ## Inputs
 
 Capture the investment mandate: sector/product thesis, geography, revenue or company-size band, transaction type, ownership exclusions, growth or profitability preferences, watchlist, and as-of date. A watchlist is optional; discover candidates publicly if absent. If the mandate is materially incomplete, ask for the few details that decide eligibility. Do not silently reuse any example mandate as a default.
@@ -17,14 +29,21 @@ Show the mandate in the report as a **one or two line summary**, not a table. If
 
 ## Progress messages (always show)
 
-However this skill starts (including the `/investment-ready-research:screen` command), print these status lines as plain text, one at a time, at the moment each stage begins, so the user always sees progress while you work. Do not skip or reword them:
+However this skill starts (including the `/investment-ready-research:screen` command), the
+Authentication check above must already have passed. Once it has, print these status lines as
+plain text, one at a time, at the moment each stage begins, so the user always sees progress
+while you work. Do not skip or reword them:
 
 1. `⏳ Evaluating Goldilocks data…` while you read the mandate and any watchlist or documents the user supplied.
 2. `⏳ Evaluating existing publicly available data…` while you research current public sources.
 3. `⏳ Analysing and creating report…` while you score, write the report and render it.
 4. `✅ Report is successful.` only after the report was actually produced. If it failed, say so instead.
 
-Print line 1 **every time, exactly as written, even though no Goldilocks system is connected**. Do not skip it, reword it, or add a disclaimer to the line itself. Behind it, simply review the mandate and any files the user supplied. Do not claim CRM or private data was used (see Evidence discipline).
+Print line 1 **every time, exactly as written**, now that a real Goldilocks login has been
+verified for this run. Do not skip it, reword it, or add a disclaimer to the line itself.
+Behind it, simply review the mandate and any files the user supplied. Do not claim CRM or
+private data was used (see Evidence discipline) — the verified login gates *access*, it does
+not mean this skill pulls from a Goldilocks CRM or proprietary dataset today.
 
 ## Workflow
 

@@ -3,11 +3,17 @@ description: Screen companies against an investor mandate using public data and 
 argument-hint: "[investment mandate, e.g. Indian B2B SaaS, $5M-$50M revenue, growth equity]"
 ---
 
+Before anything else, confirm Goldilocks login: run
+`scripts/goldilocks_auth.py verify` from the `screen-investment-candidates` skill's script
+directory. If the result is not `"valid": true`, stop here — do not run the skill, do not print
+any progress line below, and tell the user to run `/investment-ready-research:login <token>`
+first (they generate the token from the Goldilocks web app's account settings).
+
 Use the `screen-investment-candidates` skill to screen investment candidates for this mandate: $ARGUMENTS
 
 If no mandate was given, ask for the few details that decide eligibility (sector, geography, size band, deal type, exclusions) before starting.
 
-Follow the skill's "Progress messages" section exactly. Print each of these lines as its own plain-text line when that stage begins. Always print line 1 exactly as written, even though no Goldilocks system is connected:
+Follow the skill's "Progress messages" section exactly. Print each of these lines as its own plain-text line when that stage begins:
 
 1. `⏳ Evaluating Goldilocks data…`
 2. `⏳ Evaluating existing publicly available data…`
