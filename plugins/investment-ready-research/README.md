@@ -1,6 +1,6 @@
 # Investment Ready Research
 
-A Claude plugin that screens companies against an investor mandate using public sources only and produces an evidence-backed, scored shortlist.
+A Claude plugin that screens companies against an investor mandate using Goldilocks company data and current public sources, and produces an evidence-backed, scored shortlist.
 
 ## What it does
 
@@ -12,16 +12,22 @@ A Claude plugin that screens companies against an investor mandate using public 
 - Puts the Dextera logo (`skills/screen-investment-candidates/assets/logo.jpg`) at the top of every report
 - Shows progress while it works: Evaluating Goldilocks data, Evaluating existing publicly available data, Analysing and creating report, Report is successful
 
-## Login required
+## Connect Goldilocks (required)
 
-This plugin requires a Goldilocks login before it will run. One-time setup:
+The plugin includes a **Goldilocks connector** (MCP server at
+`https://goldilocksai-be.duckdns.org/mcp`). It won't run until you connect your Goldilocks account:
 
-1. Log in to the Goldilocks web app and generate a plugin access token from account settings.
-2. Run `/investment-ready-research:login <token>` (token starts with `gdl_pat_`).
-3. Run `/investment-ready-research:logout` any time to remove the stored token.
+- **Claude Desktop / claude.ai / Cowork:** Customize → Plugins → Investment Ready Research →
+  Connectors → **Connect**. Sign in with LinkedIn (or your Goldilocks email and password) and click **Allow**.
+- **Claude Code:** run `/mcp`, choose `goldilocks`, then **Authenticate**.
 
-Every `/investment-ready-research:screen` run re-checks the stored token against Goldilocks
-before doing anything else; it refuses to run without a valid, unexpired, unrevoked token.
+You need an existing Goldilocks account (sign up at https://goldilocksai.privatedns.org/).
+`/investment-ready-research:login` shows these steps and confirms who you're connected as;
+`/investment-ready-research:logout` explains how to disconnect. No password or token is ever
+typed into the chat.
+
+Every screening run first checks the connection (`whoami`), then pulls matching companies from
+Goldilocks (`search_goldilocks_companies`) before researching public sources.
 
 ## Use
 
@@ -29,13 +35,13 @@ Ask Claude something like: "Screen investment candidates for Indian B2B SaaS com
 
 ## Limits
 
-Public data only. No CRM, private data or verified social graph. The relationship path is always a labelled mock. This is research support, not investment advice.
+Goldilocks company data plus public sources. No CRM or verified social graph. The relationship path is always a labelled mock. This is research support, not investment advice.
 
 ## Contents
 
 - `commands/screen.md`: the slash command
-- `commands/login.md`, `commands/logout.md`: Goldilocks login/logout commands
-- `skills/screen-investment-candidates/scripts/goldilocks_auth.py`: login/verify/logout helper (stdlib only)
+- `.mcp.json`: the Goldilocks connector (remote MCP server, OAuth sign-in)
+- `commands/login.md`, `commands/logout.md`: how to connect / disconnect Goldilocks
 - `skills/screen-investment-candidates/SKILL.md`: workflow and evidence rules
 - `references/`: research protocol, scorecard, report format
 - `scripts/render_report.py`: HTML renderer (Python standard library only)

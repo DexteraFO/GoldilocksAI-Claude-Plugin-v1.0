@@ -3,11 +3,14 @@
   "owner": {
     "name": "Harshit Panchal"
   },
+  "metadata": {
+    "description": "GoldilocksAI plugins for Claude: investment screening with Goldilocks data"
+  },
   "plugins": [
     {
       "name": "investment-ready-research",
       "source": "./plugins/investment-ready-research",
-      "description": "Evidence-backed investment screening with public data and a mock relationship route"
+      "description": "Evidence-backed investment screening with Goldilocks data, public sources and a mock relationship route"
     }
   ]
 }

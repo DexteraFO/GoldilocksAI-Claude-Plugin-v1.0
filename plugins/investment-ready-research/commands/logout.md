@@ -1,7 +1,10 @@
 ---
-description: Log out of Goldilocks and remove the stored plugin token
+description: Disconnect your Goldilocks account from Claude
 ---
 
-Run `scripts/goldilocks_auth.py logout` from the `screen-investment-candidates` skill's script
-directory (`skills/screen-investment-candidates/scripts/goldilocks_auth.py`) and report the
-result to the user.
+Tell the user how to disconnect Goldilocks. This removes Claude's access tokens; nothing is stored
+in the chat:
+
+- **Claude Desktop / claude.ai / Cowork:** Customize → Plugins → Investment Ready Research →
+  Connectors → **Disconnect**.
+- **Claude Code:** run `/mcp`, choose `goldilocks`, then **Clear authentication**.

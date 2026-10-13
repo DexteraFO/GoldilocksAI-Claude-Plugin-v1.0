@@ -1,15 +1,20 @@
 ---
-description: Log in to Goldilocks so the investment-ready-research plugin can run
-argument-hint: "[Goldilocks plugin token, e.g. gdl_pat_...]"
+description: Connect your Goldilocks account so the investment-ready-research plugin can run
 ---
 
-Run `scripts/goldilocks_auth.py login $ARGUMENTS` from the `screen-investment-candidates`
-skill's script directory (`skills/screen-investment-candidates/scripts/goldilocks_auth.py`).
+Goldilocks sign-in happens through the plugin's **Goldilocks connector**, not in this chat.
+Never ask the user for a password or token.
 
-If no token was given, tell the user how to get one instead of guessing: log in to the
-Goldilocks web app, open account settings, and generate a plugin access token there. Do not
-accept or store anything that doesn't start with `gdl_pat_`.
+First call the Goldilocks connector's `whoami` tool.
 
-Report whether login succeeded or failed based on the script's output and exit code. Never
-print the raw token back to the user, and never fabricate a success if the script failed or
-if Goldilocks could not be reached.
+- If it returns `"valid": true`, tell the user they're already connected and show the email it
+  returned.
+- Otherwise, tell them how to connect:
+  - **Claude Desktop / claude.ai / Cowork:** Customize → Plugins → Investment Ready Research →
+    Connectors → **Connect**. A browser window opens: sign in with LinkedIn (or their Goldilocks
+    email and password), then click **Allow**.
+  - **Claude Code:** run `/mcp`, choose `goldilocks`, then **Authenticate**.
+  - They need an existing Goldilocks account; if they don't have one, they sign up at
+    https://goldilocksai.privatedns.org/ first.
+
+Report only what the tool actually returned. If Goldilocks couldn't be reached, say so.
