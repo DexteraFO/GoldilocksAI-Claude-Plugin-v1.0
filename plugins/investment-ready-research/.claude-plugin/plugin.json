@@ -1,7 +1,7 @@
 {
   "name": "investment-ready-research",
   "displayName": "Investment Ready Research",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Investment screening with Goldilocks company data and public sources: thesis-aligned shortlists and evidence-backed company reports with a clearly simulated relationship path. Requires connecting a Goldilocks account.",
   "author": {
     "name": "Harshit Panchal"

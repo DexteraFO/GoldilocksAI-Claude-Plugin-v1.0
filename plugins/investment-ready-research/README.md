@@ -21,7 +21,7 @@ The plugin includes a **Goldilocks connector** (MCP server at
   Connectors → **Connect**. Sign in with LinkedIn (or your Goldilocks email and password) and click **Allow**.
 - **Claude Code:** run `/mcp`, choose `goldilocks`, then **Authenticate**.
 
-You need an existing Goldilocks account (sign up at https://goldilocksai.privatedns.org/).
+You need an existing Goldilocks account (sign up at https://goldilocksai-demo.privatedns.org/).
 `/investment-ready-research:login` shows these steps and confirms who you're connected as;
 `/investment-ready-research:logout` explains how to disconnect. No password or token is ever
 typed into the chat.
